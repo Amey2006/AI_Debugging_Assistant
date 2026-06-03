@@ -1,0 +1,79 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+
+venv/
+env/
+ENV/
+my_env/
+
+# Environment Variables
+
+.env
+
+# Database
+
+*.db
+*.sqlite3
+
+# Logs
+
+*.log
+
+# FastAPI / Uvicorn
+
+uvicorn.log
+
+# Pytest
+
+.pytest_cache/
+
+# Mypy
+
+.mypy_cache/
+
+# Coverage
+
+.coverage
+htmlcov/
+
+# VS Code
+
+.vscode/
+
+# JetBrains
+
+.idea/
+
+# Mac
+
+.DS_Store
+
+# Linux
+
+*~
+
+# Node Modules (React frontend later)
+
+node_modules/
+
+# React Build
+
+dist/
+build/
+
+# Package Locks (optional)
+
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Misc
+
+*.swp
+*.swo
