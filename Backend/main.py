@@ -10,12 +10,13 @@ from core.database import (
 from routes import auth
 # pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
+import os
+
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",  # Your React/Vite development server
-    "http://127.0.0.1:5173",  # Alternative local address
-]
+# Parse CORS origins from environment, fallback to allowing all if not specified
+cors_origins_env = os.environ.get("CORS_ORIGINS", "*")
+origins = [origin.strip() for origin in cors_origins_env.split(",")] if cors_origins_env else ["*"]
 
 # 2. Add the CORS middleware to your FastAPI app
 app.add_middleware(

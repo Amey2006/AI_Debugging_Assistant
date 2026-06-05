@@ -104,7 +104,7 @@ export default function DebugPage() {
       setResult({
         error_type: 'API Error',
         category: 'general',
-        ai_response: `## Connection Error\n\nCouldn't reach the backend API.\n\n**Make sure your FastAPI server is running:**\n\`\`\`bash\nuvicorn main:app --reload\n\`\`\`\n\nDefault URL: \`http://localhost:8000\``,
+        ai_response: `## Connection Error\n\nCouldn't reach the backend API.\n\n**Please check if the API is running and reachable at:**\n\`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}\``,
       })
     } finally {
       setLoading(false)
