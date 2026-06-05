@@ -1,40 +1,52 @@
 # pyrefly: ignore [missing-import]
-from fastapi import FastAPI
-from api.analyze import router as analyze_router
-from core.database import (
-    engine,
-    Base
-)
 
-# pyrefly: ignore [missing-import]
-from routes import auth
-# pyrefly: ignore [missing-import]
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from dotenv import load_dotenv
 import os
+
+from api.analyze import router as analyze_router
+from core.database import engine, Base
+from routes import auth
+
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI()
 
-# Parse CORS origins from environment, fallback to allowing all if not specified
-cors_origins_env = os.environ.get("CORS_ORIGINS", "*")
-origins = [origin.strip() for origin in cors_origins_env.split(",")] if cors_origins_env else ["*"]
 
-# 2. Add the CORS middleware to your FastAPI app
+# Get CORS origins from .env
+cors_origins_env = os.getenv("CORS_ORIGINS")
+
+if cors_origins_env:
+    origins = [origin.strip() for origin in cors_origins_env.split(",")]
+else:
+    origins = []
+
+
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,            # Allows requests from your React app
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],              # Allows all HTTP methods (POST, GET, etc.)
-    allow_headers=["*"],              # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+
+# Create database tables
 Base.metadata.create_all(bind=engine)
 
 
+# Register routes
 app.include_router(auth.router)
 app.include_router(analyze_router)
+
 
 @app.get("/")
 def root():
     return {
         "message": "AI Debugger Backend Running"
     }
-
