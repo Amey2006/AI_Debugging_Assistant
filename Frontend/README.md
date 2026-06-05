@@ -1,16 +1,65 @@
-# React + Vite
+# DebugMind AI — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium AI debugging assistant UI built with Vite + React + TypeScript.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **Vite + React + TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion** — animations
+- **Zustand** — state management (persisted)
+- **Axios** — API client
+- **Monaco Editor** — code editor
+- **Recharts** — analytics charts
+- **React Markdown** — formatted AI responses
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Pages
+| Route | Description |
+|-------|-------------|
+| `/login` | Login with email/password |
+| `/register` | Create account |
+| `/dashboard` | Stats, activity chart, recent analyses |
+| `/debug` | **Core workspace** — code editor, error input, AI analysis |
+| `/history` | All past debug sessions, expandable cards |
+| `/settings` | Preferences, API keys, notifications |
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Install deps
+npm install
 
-## Expanding the ESLint configuration
+# Configure API URL
+cp .env.example .env
+# Edit VITE_API_URL to point to your FastAPI backend (default: http://localhost:8000)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Dev server
+npm run dev
+
+# Production build
+npm run build
+```
+
+## Backend Integration
+
+The frontend connects to your FastAPI backend:
+
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `POST /auth/register` | POST | Register new user |
+| `POST /auth/login` | POST | Login → get JWT |
+| `POST /analyze-error` | POST | `{ code, error_message }` → AI debug response |
+
+Make sure your FastAPI backend is running with CORS enabled for `http://localhost:5173`.
+
+Add to `main.py`:
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
