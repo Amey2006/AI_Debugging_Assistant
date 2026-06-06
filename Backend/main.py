@@ -23,7 +23,11 @@ cors_origins_env = os.getenv("CORS_ORIGINS")
 if cors_origins_env:
     origins = [origin.strip() for origin in cors_origins_env.split(",")]
 else:
-    origins = []
+    origins = [
+        "https://debugmindai.vercel.app",
+        "http://localhost:3000",  # Common frontend local port
+        "http://localhost:5173",  # Vite local port
+    ]
 
 
 # Add CORS middleware
