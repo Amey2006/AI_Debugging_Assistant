@@ -1,5 +1,6 @@
 # pyrefly: ignore [missing-import]
 
+from ai import prompts
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -25,8 +26,8 @@ if cors_origins_env:
 else:
     origins = [
         "https://debugmindai.vercel.app",
-        "http://localhost:3000",  # Common frontend local port
-        "http://localhost:5173",  # Vite local port
+    "https://debugmindai-git-main-amey-s-projects2.vercel.app",
+    "https://debugmind-rknw5l9l9-amey-s-projects2.vercel.app",
     ]
 
 
